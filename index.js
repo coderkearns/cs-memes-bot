@@ -78,15 +78,7 @@ async function sendMeme() {
     const meme = await fetchMeme();
     if (meme) {
         try {
-            await channel.send({
-                embeds: [{
-                    title: meme.title,
-                    url: meme.postLink,
-                    image: { url: meme.url },
-                    color: 0x0099ff,
-                    footer: { text: `r/${meme.subreddit} • 👍 ${meme.ups}` }
-                }]
-            });
+            await channel.send(meme.url);
             console.log(`Meme sent: ${meme.title}`);
         } catch (error) {
             console.error('Error sending meme:', error.message);
