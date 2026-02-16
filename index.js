@@ -51,6 +51,12 @@ async function fetchMeme() {
         // When count > 1, API returns { memes: [...] }
         const memes = response.data.memes;
         
+        // Handle empty array
+        if (!memes || memes.length === 0) {
+            console.error('No memes returned from API');
+            return null;
+        }
+        
         // Find meme with highest upvotes
         const bestMeme = memes.reduce((best, current) => 
             current.ups > best.ups ? current : best
