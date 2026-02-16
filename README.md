@@ -57,7 +57,12 @@ npm install
        // Curfew hours (24-hour format)
        // Bot won't send memes during these hours
        // Default: 11pm (23:00) to 9am (09:00)
-       CURFEW_HOURS: { start: 23, end: 9 }
+       CURFEW_HOURS: { start: 23, end: 9 },
+
+      // How many memes to fetch at once
+      // Bot will send the one with the highest upvote count
+      // Default: 3
+      MEME_FETCH_COUNT: 3
    }
    ```
 
@@ -114,9 +119,8 @@ The bot will:
 ### MEME_FETCH_COUNT
 - **Type**: `number`
 - **Example**: `3`
-- **Default**: `3`
 - **Description**: Number of memes to fetch at once. The bot will automatically select the meme with the highest upvotes from the fetched batch.
 
 ## License
 
-ISC
+MIT
