@@ -103,8 +103,21 @@ function scheduleNextMeme() {
     }
 
     const waitTime = getRandomWait();
-    const waitMinutes = Math.floor(waitTime / 1000 / 60);
-    console.log(`Next meme scheduled in ${waitMinutes} minutes`);
+    const waitSeconds = Math.floor(waitTime / 1000);
+    const waitMinutes = Math.floor(waitSeconds / 60);
+    const waitHours = Math.floor(waitMinutes / 60);
+    
+    let timeStr;
+    if (waitHours > 0) {
+        const remainingMinutes = waitMinutes % 60;
+        timeStr = `${waitHours}h ${remainingMinutes}m`;
+    } else if (waitMinutes > 0) {
+        timeStr = `${waitMinutes} minutes`;
+    } else {
+        timeStr = `${waitSeconds} seconds`;
+    }
+    
+    console.log(`Next meme scheduled in ${timeStr}`);
     
     timeoutId = setTimeout(sendMeme, waitTime);
 }
