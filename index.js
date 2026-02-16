@@ -111,6 +111,24 @@ function scheduleNextMeme() {
 
     console.log(`Next meme scheduled in ${timeStr}`);
 
+    // Calculate the next scheduled time
+    const nextTime = new Date(Date.now() + waitTime);
+    const hours = nextTime.getHours().toString().padStart(2, '0');
+    const minutes = nextTime.getMinutes().toString().padStart(2, '0');
+    const timeString = `${hours}:${minutes}`;
+
+    // Set bot's custom status
+    if (client.user) {
+        client.user.setPresence({
+            activities: [{
+                name: `Next meme at ${timeString}`,
+                type: 4 // Custom status
+            }],
+            status: 'online'
+        });
+        console.log(`Bot status updated: Next meme at ${timeString}`);
+    }
+
     timeoutId = setTimeout(sendMeme, waitTime);
 }
 
