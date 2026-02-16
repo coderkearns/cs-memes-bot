@@ -78,7 +78,7 @@ async function sendMeme() {
     const meme = await fetchMeme();
     if (meme) {
         try {
-            await channel.send(meme.url);
+            await channel.send({ content: `r/${meme.subreddit} - ${meme.title}`, files: [{ attachment: meme.url }] });
             console.log(`Meme sent: ${meme.title}`);
         } catch (error) {
             console.error('Error sending meme:', error.message);
@@ -98,7 +98,7 @@ function scheduleNextMeme() {
     const waitSeconds = Math.floor(waitTime / 1000);
     const waitMinutes = Math.floor(waitSeconds / 60);
     const waitHours = Math.floor(waitMinutes / 60);
-    
+
     let timeStr;
     if (waitHours > 0) {
         const remainingMinutes = waitMinutes % 60;
@@ -108,19 +108,19 @@ function scheduleNextMeme() {
     } else {
         timeStr = `${waitSeconds} seconds`;
     }
-    
+
     console.log(`Next meme scheduled in ${timeStr}`);
-    
+
     timeoutId = setTimeout(sendMeme, waitTime);
 }
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
     console.log('Bot is ready!');
-    
+
     // Set the channel ID from environment variable
     channelId = process.env.CHANNEL_ID;
-    
+
     if (!channelId) {
         console.warn('Warning: CHANNEL_ID not set in environment variables');
         console.warn('Set CHANNEL_ID in .env file to start sending memes');
