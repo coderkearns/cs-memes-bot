@@ -111,6 +111,12 @@ The bot will:
 - **Example**: `{ start: 23, end: 9 }`
 - **Description**: Hours when the bot won't send memes (24-hour format). Supports overnight curfews (e.g., 23:00 to 09:00).
 
+### MEME_FETCH_COUNT
+- **Type**: `number`
+- **Example**: `3`
+- **Default**: `3`
+- **Description**: Number of memes to fetch at once. The bot will automatically select the meme with the highest upvotes from the fetched batch.
+
 ## License
 
 ISC
