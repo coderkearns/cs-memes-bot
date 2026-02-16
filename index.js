@@ -45,8 +45,18 @@ function isDuringCurfew() {
 async function fetchMeme() {
     try {
         const subreddit = getSubreddit();
-        const response = await axios.get(`https://meme-api.com/gimme/${subreddit}`);
-        return response.data;
+        const count = config.MEME_FETCH_COUNT || 3;
+        const response = await axios.get(`https://meme-api.com/gimme/${subreddit}/${count}`);
+        
+        // When count > 1, API returns { memes: [...] }
+        const memes = response.data.memes;
+        
+        // Find meme with highest upvotes
+        const bestMeme = memes.reduce((best, current) => 
+            current.ups > best.ups ? current : best
+        );
+        
+        return bestMeme;
     } catch (error) {
         console.error('Error fetching meme:', error.message);
         return null;
