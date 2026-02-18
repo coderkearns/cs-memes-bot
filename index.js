@@ -46,6 +46,13 @@ async function getRedditImages(subreddit, limit = 10) {
 
     try {
         const response = await fetch(url);
+        
+        // Check if response is successful
+        if (!response.ok) {
+            console.error(`Reddit API returned status ${response.status}`);
+            return [];
+        }
+        
         const json = await response.json();
 
         return json.data.children
