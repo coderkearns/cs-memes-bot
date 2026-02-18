@@ -159,9 +159,11 @@ function scheduleNextMeme() {
 
     // Calculate the next scheduled time
     const nextTime = new Date(Date.now() + waitTime);
-    const hours = nextTime.getHours().toString().padStart(2, '0');
+    let hours = nextTime.getHours();
     const minutes = nextTime.getMinutes().toString().padStart(2, '0');
-    const timeString = `${hours}:${minutes}`;
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; // Convert to 12-hour format, with 0 becoming 12
+    const timeString = `${hours}:${minutes} ${ampm}`;
 
     // Set bot's custom status
     if (client.user) {
