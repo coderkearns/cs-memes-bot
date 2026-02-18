@@ -83,13 +83,13 @@ async function fetchMeme() {
         
         // Pick a random meme
         const randomIndex = Math.floor(Math.random() * memes.length);
-        const bestMeme = memes[randomIndex];
+        const selectedMeme = memes[randomIndex];
         
         // Convert to expected format
         return {
-            title: bestMeme.title,
-            url: bestMeme.imageURL,
-            ups: bestMeme.ups,
+            title: selectedMeme.title,
+            url: selectedMeme.imageURL,
+            ups: selectedMeme.ups,
             subreddit: subreddit
         };
     } catch (error) {
