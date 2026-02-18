@@ -4,7 +4,7 @@ A simple Discord bot that automatically sends memes from Reddit at random interv
 
 ## Features
 
-- 🎲 Fetches memes from Reddit via [D3vd/Meme_Api](https://github.com/D3vd/Meme_Api)
+- 🎲 Fetches memes directly from Reddit
 - ⏰ Random posting intervals (configurable min/max wait time)
 - 🌙 Curfew hours - bot won't send memes during specified hours (e.g., 11pm - 9am)
 - 🎯 Support for multiple subreddits - picks randomly if configured as an array
