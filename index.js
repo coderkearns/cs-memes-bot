@@ -42,7 +42,7 @@ function isDuringCurfew() {
 
 // Fetch images from Reddit
 async function getRedditImages(subreddit, limit = 10) {
-    const url = `https://www.reddit.com/r/${subreddit}/hot/.json?limit=${limit}`;
+    const url = `https://www.reddit.com/r/${subreddit}/best/.json?limit=${limit}`;
 
     try {
         const response = await fetch(url);
@@ -81,10 +81,9 @@ async function fetchMeme() {
             return null;
         }
         
-        // Find meme with highest upvotes
-        const bestMeme = memes.reduce((best, current) => 
-            current.ups > best.ups ? current : best
-        );
+        // Pick a random meme
+        const randomIndex = Math.floor(Math.random() * memes.length);
+        const bestMeme = memes[randomIndex];
         
         // Convert to expected format
         return {
