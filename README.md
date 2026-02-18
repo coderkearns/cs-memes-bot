@@ -60,9 +60,9 @@ npm install
        CURFEW_HOURS: { start: 23, end: 9 },
 
       // How many memes to fetch at once
-      // Bot will send the one with the highest upvote count
-      // Default: 3
-      MEME_FETCH_COUNT: 3
+      // Bot will pick a random one from the fetched batch
+      // Default: 50
+      MEME_FETCH_COUNT: 50
    }
    ```
 
@@ -118,8 +118,8 @@ The bot will:
 
 ### MEME_FETCH_COUNT
 - **Type**: `number`
-- **Example**: `3`
-- **Description**: Number of memes to fetch at once. The bot will automatically select the meme with the highest upvotes from the fetched batch.
+- **Example**: `50`
+- **Description**: Number of memes to fetch at once. The bot will pick a random meme from the fetched batch.
 
 ## License
 

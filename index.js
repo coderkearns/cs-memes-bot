@@ -42,7 +42,7 @@ function isDuringCurfew() {
 
 // Fetch images from Reddit
 async function getRedditImages(subreddit, limit = 10) {
-    const url = `https://www.reddit.com/r/${subreddit}/hot/.json?limit=${limit}`;
+    const url = `https://www.reddit.com/r/${subreddit}/best/.json?limit=${limit}`;
 
     try {
         const response = await fetch(url);
@@ -81,16 +81,15 @@ async function fetchMeme() {
             return null;
         }
         
-        // Find meme with highest upvotes
-        const bestMeme = memes.reduce((best, current) => 
-            current.ups > best.ups ? current : best
-        );
+        // Pick a random meme
+        const randomIndex = Math.floor(Math.random() * memes.length);
+        const selectedMeme = memes[randomIndex];
         
         // Convert to expected format
         return {
-            title: bestMeme.title,
-            url: bestMeme.imageURL,
-            ups: bestMeme.ups,
+            title: selectedMeme.title,
+            url: selectedMeme.imageURL,
+            ups: selectedMeme.ups,
             subreddit: subreddit
         };
     } catch (error) {
