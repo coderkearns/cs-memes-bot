@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
-const axios = require('axios');
 const config = require('./config');
 
 const client = new Client({
@@ -41,19 +40,37 @@ function isDuringCurfew() {
     return currentHour >= start && currentHour < end;
 }
 
-// Fetch meme from D3vd/Meme_Api
+// Fetch images from Reddit
+async function getRedditImages(subreddit, limit = 10) {
+    const url = `https://www.reddit.com/r/${subreddit}/hot/.json?limit=${limit}`;
+
+    try {
+        const response = await fetch(url);
+        const json = await response.json();
+
+        return json.data.children
+            .filter(post => post.data.post_hint === "image")
+            .map(post => ({
+                title: post.data.title,
+                imageURL: post.data.url,
+                ups: post.data.ups
+            }));
+    } catch (error) {
+        console.error("Error fetching Reddit data:", error);
+        return [];
+    }
+}
+
+// Fetch meme from Reddit directly
 async function fetchMeme() {
     try {
         const subreddit = getSubreddit();
         const count = config.MEME_FETCH_COUNT || 3;
-        const response = await axios.get(`https://meme-api.com/gimme/${subreddit}/${count}`);
-        
-        // When count > 1, API returns { memes: [...] }
-        const memes = response.data.memes;
+        const memes = await getRedditImages(subreddit, count);
         
         // Handle empty array
         if (!memes || memes.length === 0) {
-            console.error('No memes returned from API');
+            console.error('No memes returned from Reddit');
             return null;
         }
         
@@ -62,7 +79,13 @@ async function fetchMeme() {
             current.ups > best.ups ? current : best
         );
         
-        return bestMeme;
+        // Convert to expected format
+        return {
+            title: bestMeme.title,
+            url: bestMeme.imageURL,
+            ups: bestMeme.ups,
+            subreddit: subreddit
+        };
     } catch (error) {
         console.error('Error fetching meme:', error.message);
         return null;
