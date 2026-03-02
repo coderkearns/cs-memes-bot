@@ -122,11 +122,21 @@ function scheduleNextMeme(client) {
     timeoutId = setTimeout(() => sendMeme(client), waitTime);
 }
 
-function setChannelId(id) {
-    channelId = id;
+function setup(client) {
+    if (!config.memes.SEND_MEMES) {
+        if (!process.env.CHANNEL_ID) {
+            console.warn('Warning: CHANNEL_ID not set in environment variables');
+            console.warn('Set CHANNEL_ID in .env file to start sending memes');
+        } else {
+            channelId = process.env.CHANNEL_ID;
+            console.log(`Will send memes to channel: ${process.env.CHANNEL_ID}`);
+
+            // Send first meme after bot is ready
+            sendMeme(client);
+        }
+    }
 }
 
 module.exports = {
-    setChannelId,
-    sendMeme
+    setup
 };

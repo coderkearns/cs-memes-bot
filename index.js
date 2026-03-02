@@ -14,17 +14,7 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
     console.log('Bot is ready!');
 
-    if (!config.memes.SEND_MEMES) {
-        if (!process.env.CHANNEL_ID) {
-            console.warn('Warning: CHANNEL_ID not set in environment variables');
-            console.warn('Set CHANNEL_ID in .env file to start sending memes');
-        } else {
-            console.log(`Will send memes to channel: ${process.env.CHANNEL_ID}`);
-            // Send first meme after bot is ready
-            memes.setChannelId(process.env.CHANNEL_ID);
-            memes.sendMeme(client);
-        }
-    }
+    memes.setup(client);
 });
 
 client.on('error', error => {
