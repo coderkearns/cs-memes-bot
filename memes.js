@@ -123,17 +123,17 @@ function scheduleNextMeme(client) {
 }
 
 function setup(client) {
-    if (!config.memes.SEND_MEMES) {
-        if (!process.env.CHANNEL_ID) {
-            console.warn('Warning: CHANNEL_ID not set in environment variables');
-            console.warn('Set CHANNEL_ID in .env file to start sending memes');
-        } else {
-            channelId = process.env.CHANNEL_ID;
-            console.log(`Will send memes to channel: ${process.env.CHANNEL_ID}`);
+    if (!config.memes.SEND_MEMES) return
 
-            // Send first meme after bot is ready
-            sendMeme(client);
-        }
+    if (!process.env.CHANNEL_ID) {
+        console.warn('Warning: CHANNEL_ID not set in environment variables');
+        console.warn('Set CHANNEL_ID in .env file to start sending memes');
+    } else {
+        channelId = process.env.CHANNEL_ID;
+        console.log(`Will send memes to channel: ${process.env.CHANNEL_ID}`);
+
+        // Send first meme after bot is ready
+        sendMeme(client);
     }
 }
 

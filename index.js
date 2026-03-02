@@ -1,20 +1,23 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
-const memes = require('./memes');
-const config = require('./config');
 
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
     ]
 });
 
-client.once('ready', () => {
+const memes = require('./memes');
+const deseret = require('./deseret');
+
+client.once('clientReady', () => {
     console.log(`Logged in as ${client.user.tag}`);
     console.log('Bot is ready!');
 
     memes.setup(client);
+    deseret.setup(client);
 });
 
 client.on('error', error => {
